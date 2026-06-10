@@ -1,0 +1,13 @@
+﻿Komponen,Hasil
+Dokumen utama,Dokumen_RAG_Akademik_STTNF.pdf
+Jumlah halaman PDF,7
+Format dokumen,PDF
+Library ekstraksi,pdf-parse
+Ukuran chunk,1000 karakter
+Overlap chunk,200 karakter
+Jumlah chunk terbentuk,70
+Jumlah embedding,70
+Dimensi embedding,384
+Model embedding,Xenova/all-MiniLM-L6-v2
+Vector store,JSON lokal
+Lokasi vector store,data/vectorstore/chunks.json

@@ -8,10 +8,10 @@ export async function answerQuestion(question: string, history?: string): Promis
         throw new Error("Pertanyaan tidak boleh kosong.");
     }
 
-    const rawChunks = await retrieveRelevantChunks(question);
+    const rawChunks = await retrieveRelevantChunks(question, 12);
 
     // Filter chunk yang cukup relevan
-    const relevantChunks = rawChunks.filter(chunk => chunk.score > 0.35);
+    const relevantChunks = rawChunks.filter(chunk => chunk.score > 0.3);
 
     // Menggabungkan teks dari chunk yang relevan (jika ada)
     const context = relevantChunks.length > 0 

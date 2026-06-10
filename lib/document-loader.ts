@@ -20,8 +20,16 @@ async function loadSinglePDF(filePath: string, fileName: string): Promise<Loaded
     const dataBuffer = fs.readFileSync(filePath);
     try {
         const data = await pdfParse(dataBuffer);
+        let text = data.text || "";
+        
+        // Pembersihan teks dasar untuk menangani penggabungan kata/angka yang sering terjadi di PDF
+        text = text.replace(/(\d)([A-Z])/g, '$1 $2'); // 1Magang -> 1 Magang
+        text = text.replace(/([a-z])(\d)/g, '$1 $2'); // MBKM1 -> MBKM 1
+        text = text.replace(/([a-z])([A-Z])/g, '$1 $2'); // NoProgram -> No Program
+        text = text.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2'); // MBKMProgram -> MBKM Program
+        
         return {
-            text: data.text || "",
+            text: text,
             source: fileName,
             page: 1,
             type: 'pdf'
