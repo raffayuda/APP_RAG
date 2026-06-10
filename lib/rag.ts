@@ -14,9 +14,15 @@ export async function answerQuestion(question: string, history?: string): Promis
     const relevantChunks = rawChunks.filter(chunk => chunk.score > 0.3);
 
     // Menggabungkan teks dari chunk yang relevan (jika ada)
-    const context = relevantChunks.length > 0 
+    let context = relevantChunks.length > 0 
         ? relevantChunks.map(chunk => chunk.text).join("\n\n---\n\n")
-        : "Tidak ada informasi spesifik di dokumen untuk pertanyaan terbaru ini. Gunakan riwayat percakapan jika ini adalah pertanyaan lanjutan.";
+        : "";
+
+    if (!context && (!history || history === "")) {
+        context = "Tidak ada informasi spesifik di dokumen untuk pertanyaan terbaru ini.";
+    } else if (!context) {
+        context = "Gunakan riwayat percakapan untuk menjawab jika relevan, karena tidak ada informasi baru dari dokumen.";
+    }
 
     // Batasi riwayat percakapan jika terlalu panjang (ambil 2000 karakter terakhir)
     const trimmedHistory = history && history.length > 2000 

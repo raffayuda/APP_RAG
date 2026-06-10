@@ -3,7 +3,7 @@ import path from 'path';
 import { DocumentChunk, RetrievedChunk } from './types';
 import { embedText } from './embeddings';
 
-const VECTOR_STORE_PATH = process.env.VECTOR_STORE_PATH || './data/vectorstore/chunks.json';
+const VECTOR_STORE_PATH = path.join(process.cwd(), 'data', 'vectorstore', 'chunks.json');
 
 export async function saveChunks(chunks: DocumentChunk[]): Promise<void> {
     const dir = path.dirname(VECTOR_STORE_PATH);

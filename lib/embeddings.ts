@@ -1,4 +1,8 @@
-import { pipeline, FeatureExtractionPipeline } from '@xenova/transformers';
+import { pipeline, FeatureExtractionPipeline, env } from '@xenova/transformers';
+
+// Konfigurasi khusus untuk Vercel/Serverless
+env.cacheDir = '/tmp/transformers-cache';
+env.allowLocalModels = false;
 
 let extractor: FeatureExtractionPipeline | null = null;
 
