@@ -8,7 +8,7 @@ export async function answerQuestion(question: string, history?: string): Promis
         throw new Error("Pertanyaan tidak boleh kosong.");
     }
 
-    const rawChunks = await retrieveRelevantChunks(question, 12);
+    const rawChunks = await retrieveRelevantChunks(question, 5);
 
     // Filter chunk yang cukup relevan
     const relevantChunks = rawChunks.filter(chunk => chunk.score > 0.3);
@@ -18,7 +18,12 @@ export async function answerQuestion(question: string, history?: string): Promis
         ? relevantChunks.map(chunk => chunk.text).join("\n\n---\n\n")
         : "Tidak ada informasi spesifik di dokumen untuk pertanyaan terbaru ini. Gunakan riwayat percakapan jika ini adalah pertanyaan lanjutan.";
 
-    const prompt = buildPrompt(question, context, history);
+    // Batasi riwayat percakapan jika terlalu panjang (ambil 2000 karakter terakhir)
+    const trimmedHistory = history && history.length > 2000 
+        ? "..." + history.substring(history.length - 2000) 
+        : history;
+
+    const prompt = buildPrompt(question, context, trimmedHistory);
 
     const answer = await askLlama(prompt);
 

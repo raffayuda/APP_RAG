@@ -30,8 +30,8 @@ export async function askLlama(prompt: string): Promise<string> {
     });
 
     return chatCompletion.choices[0]?.message?.content || "Informasi tidak ditemukan dalam dokumen.";
-  } catch (error) {
-    console.error("Groq API Error:", error);
+  } catch (error: any) {
+    console.error("Groq API Error Detail:", error?.response?.data || error.message || error);
     throw new Error("Gagal menghubungi layanan Groq API.");
   }
 }

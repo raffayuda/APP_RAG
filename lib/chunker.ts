@@ -2,8 +2,8 @@ import { DocumentChunk } from './types';
 
 export function chunkText(text: string, source: string, page?: number): Omit<DocumentChunk, "embedding">[] {
     const chunks: Omit<DocumentChunk, "embedding">[] = [];
-    const chunkSize = 1500;
-    const overlap = 400;
+    const chunkSize = 1000;
+    const overlap = 200;
 
     // Menghapus spasi horizontal berlebih tapi tetap mempertahankan newline
     const cleanText = text.replace(/[ \t]+/g, ' ').replace(/\r\n/g, '\n').trim();
